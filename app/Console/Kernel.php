@@ -2,8 +2,15 @@
 
 namespace App\Console;
 
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+
+use App\Console\Commands\FranchiseMaps;
+use App\Console\Commands\PlayersTable;
+use App\Console\Commands\TradeBait;
+use App\Console\Commands\CheckTrade;
+use App\Console\Commands\CheckTradeProposal;
 
 class Kernel extends ConsoleKernel
 {
@@ -13,7 +20,11 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        FranchiseMaps::class,
+        PlayersTable::class,
+        TradeBait::class,
+        CheckTrade::class,
+        CheckTradeProposal::class,
     ];
 
     /**
@@ -24,8 +35,25 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        //Retrieves JSON and create mapping ID => Name
+        $schedule->call(function () {
+            Artisan::call('franchisemaps:update');
+        })->daily();
+
+        //Retrieves JSON and upsert players table
+        $schedule->call(function () {
+            Artisan::call('playerstable:update');
+        })->daily();
+
+        //Retrieves JSON and notify od Trade Bait Updates
+        $schedule->call(function () {
+            Artisan::call('tradebait:update');
+        })->everyFiveMinutes();
+
+        //Retrieves JSON and notify user of new proposal
+        $schedule->call(function () {
+            Artisan::call('checktradeproposal:update');
+        })->everyFiveMinutes();
     }
 
     /**

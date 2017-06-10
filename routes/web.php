@@ -12,5 +12,9 @@
 */
 
 Route::get('/', function () {
+    return "hi"; //view('welcome');
+});
+
+Route::get('/leagues', function () {
     return view('welcome');
 });
