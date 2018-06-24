@@ -19,6 +19,16 @@ Route::get('/leagues', function () {
     return view('welcome');
 });
 
+Route::get('/add-mfl-account', function () {
+    return view('mfl-slack-form');
+});
+
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::post('add-mfl-account', [
+    'uses' => 'RegisterFormController@registerUser'
+  ]);
+

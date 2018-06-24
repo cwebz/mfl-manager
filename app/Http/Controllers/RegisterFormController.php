@@ -57,13 +57,15 @@ class RegisterFormController extends Controller
         var_dump($request->input());
         return "hazaaarr";
     }
+
+    
     /**
     * Use the form to get MFL user cookie
     *
     * @param Request $request
     * @return json
     */
-    public static function registerUser(Request $request){
+    public function registerUser(Request $request){
         //Get form field info, attempt to sign-in, get cookie
             //We get the cookie and slack username from this
         //Store mfl_registered_users

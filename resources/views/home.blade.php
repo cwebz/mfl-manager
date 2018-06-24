@@ -6,10 +6,22 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
+                    <strong>Manage Accounts</strong>
+                    <a class="btn btn-primary mfl-mgr-btn" href="/add-mfl-account">Add Account</a>
+                </div>
+
+                <div class="panel-body">
+                    Some logix here to display accounts if found
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">
                     <strong>Manage Leagues</strong>
-                    <button type="button" class="btn-primary">
-                        Add Team
-                    </button>
+                    <a class="btn btn-primary mfl-mgr-btn" href="">Add League</a>
                 </div>
 
                 <div class="panel-body">
