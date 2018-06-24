@@ -19,4 +19,8 @@ Vagrant.configure("2") do |config|
         v.memory = 3072
     end
 
+    config.vm.provider "virtualbox" do |v|
+        v.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
+    end
+
 end

@@ -58,7 +58,7 @@ composer install
 
 php artisan key:generate
 
-mysql -uroot -proot -e "create database mfl-manager"
+mysql -uroot -proot -e "create database mfl_manager"
 
 # migrate for the platform site
 php artisan migrate
@@ -169,5 +169,5 @@ grep "cd /var/www" /home/vagrant/.bashrc || printf "cd /var/www\n" >> /home/vagr
 # systemctl enable supervisor
 
 #start supervisor
-service supervisor stop
-service supervisor start
+# service supervisor stop
+# service supervisor start
