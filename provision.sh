@@ -14,10 +14,15 @@ apt-get install -y git
 apt-get install -y unzip
 
 #install nginx and php-fpm
-apt-get install -y nginx php-fpm
+apt-get install -y nginx
+
+apt-get install -y python-software-properties
+add-apt-repository -y ppa:ondrej/php
+apt-get update -y
+
 
 #install php
-apt-get install -y php php-mysql php-mcrypt php-curl php-cli php-gd php7.0-mbstring php7.0-dom php7.0-bcmath php-imagick php-zip
+apt-get install -y php7.1 php7.1-cli php7.1-common php7.1-json php7.1-opcache php7.1-mysql php7.1-mbstring php7.1-mcrypt php7.1-zip php7.1-fpm
 
 apt-get install -y memcached
 
@@ -90,7 +95,7 @@ server {
         }
         location ~ \.php\$ {
                 include snippets/fastcgi-php.conf;
-                fastcgi_pass unix:/run/php/php7.0-fpm.sock;
+                fastcgi_pass unix:/run/php/php7.1-fpm.sock;
         }
 }
 EOF
@@ -122,7 +127,7 @@ server {
         }
         location ~ \.php\$ {
                 include snippets/fastcgi-php.conf;
-                fastcgi_pass unix:/run/php/php7.0-fpm.sock;
+                fastcgi_pass unix:/run/php/php7.1-fpm.sock;
         }
 }
 EOF
@@ -135,16 +140,16 @@ if [ -f /etc/nginx/sites-enabled/default ] ; then
 fi
 
 #update the max filesize upload to 100M
-sed -ie 's/upload_max_filesize = 2M/upload_max_filesize = 100M/g' /etc/php/7.0/fpm/php.ini
-sed -ie 's/post_max_size = 8M/post_max_size = 100M/g' /etc/php/7.0/fpm/php.ini
+sed -ie 's/upload_max_filesize = 2M/upload_max_filesize = 100M/g' /etc/php/7.1/fpm/php.ini
+sed -ie 's/post_max_size = 8M/post_max_size = 100M/g' /etc/php/7.1/fpm/php.ini
 sed -i '/http {/a client_max_body_size 100m;' /etc/nginx/nginx.conf
 
 #set the max execution time for database backups
-sed -ie 's/max_execution_time .*/max_execution_time = 600/g' /etc/php/7.0/fpm/php.ini
+sed -ie 's/max_execution_time .*/max_execution_time = 600/g' /etc/php/7.1/fpm/php.ini
 sed -i '/http {/a fastcgi_read_timeout 600s;' /etc/nginx/nginx.conf
 
 service nginx restart
-service php7.0-fpm restart
+service php7.1-fpm restart
 
 grep "cd /var/www" /home/vagrant/.bashrc || printf "cd /var/www\n" >> /home/vagrant/.bashrc
 
